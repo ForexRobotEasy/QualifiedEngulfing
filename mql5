@@ -1,0 +1,119 @@
+
+// Developer: Forex Robot Easy Team (forexroboteasy.com)
+// Program Name: QualifiedEngulfing
+
+// Include necessary libraries and dependencies
+#include <Trade\Trade.mqh>
+#include <Trade\SymbolInfo.mqh>
+
+// Define constants for trading parameters
+#define LOT_SIZE 0.01           // Lot size for each trade
+#define STOP_LOSS 50            // Stop loss in pips
+#define TAKE_PROFIT 100         // Take profit in pips
+#define MAX_TRADES 10           // Maximum number of trades allowed
+
+// Define global variables
+int tradeCount = 0;             // Counter for number of trades executed
+
+// Define trade management functions
+void openBuyTrade(double price)
+{
+    if (tradeCount < MAX_TRADES)
+    {
+        double stopLoss = price - STOP_LOSS * SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+        double takeProfit = price + TAKE_PROFIT * SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+        
+        Trade.Buy(LOT_SIZE, price, stopLoss, takeProfit);
+        tradeCount++;
+    }
+}
+
+void openSellTrade(double price)
+{
+    if (tradeCount < MAX_TRADES)
+    {
+        double stopLoss = price + STOP_LOSS * SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+        double takeProfit = price - TAKE_PROFIT * SymbolInfoDouble(_Symbol, SYMBOL_POINT);
+        
+        Trade.Sell(LOT_SIZE, price, stopLoss, takeProfit);
+        tradeCount++;
+    }
+}
+
+// Define market analysis function
+void analyzeMarket()
+{
+    // Insert your unique algorithm to analyze the Forex market here
+    // Identify potential trade opportunities based on specific market conditions
+    
+    // For demonstration purposes, let's assume a bullish engulfing pattern is identified
+    double currentPrice = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+    double previousPrice = SymbolInfoDouble(_Symbol, SYMBOL_PREVIOUS_BID);
+    
+    if (currentPrice > previousPrice)
+    {
+        // Open a buy trade
+        openBuyTrade(currentPrice);
+    }
+    else if (currentPrice < previousPrice)
+    {
+        // Open a sell trade
+        openSellTrade(currentPrice);
+    }
+}
+
+// Define user interface function to customize software parameters
+void customizeParameters()
+{
+    // Implement user interface for traders to adjust parameters
+    // Allow customization of parameters to identify potential trading opportunities
+}
+
+// Define main function
+void OnTick()
+{
+    analyzeMarket();
+}
+
+// Define initialization function
+void OnInit()
+{
+    // Initialize necessary components and settings here
+}
+
+// Define cleanup function
+void OnDeinit(const int reason)
+{
+    // Perform necessary cleanup actions here
+}
+
+// Define error handling function
+void OnTradeError(const string error)
+{
+    // Handle trade errors and exceptions here
+}
+
+// Define code optimization function
+void OnTester()
+{
+    // Optimize code for efficient execution and minimal resource usage
+}
+
+// Define testing function
+void runTests()
+{
+    // Conduct thorough testing to ensure the software functions as intended
+}
+
+// Define documentation function
+void provideDocumentation()
+{
+    // Document the code and provide clear instructions for installation and usage
+}
+
+// Define main entry point
+int OnInit()
+{
+    // Run the program
+    return 0;
+}
